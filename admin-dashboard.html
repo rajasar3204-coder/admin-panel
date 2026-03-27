@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel | Master Mind Control</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #05070a; color: #e2e8f0; }
+        .sidebar { width: 260px; background: #0b0f1a; border-right: 1px solid #1e293b; }
+        .card { background: #0b0f1a; border: 1px solid #1e293b; border-radius: 1.5rem; }
+        .status-active { color: #22c55e; background: rgba(34, 197, 94, 0.1); padding: 2px 8px; border-radius: 99px; font-size: 10px; }
+        .status-expired { color: #ef4444; background: rgba(239, 68, 68, 0.1); padding: 2px 8px; border-radius: 99px; font-size: 10px; }
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
+    </style>
+</head>
+<body class="flex h-screen overflow-hidden">
+
+    <aside class="sidebar flex flex-col p-6">
+        <div class="flex items-center gap-3 mb-10">
+            <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center font-black italic">M</div>
+            <h1 class="font-black tracking-tighter text-white">ADMIN CENTER</h1>
+        </div>
+        
+        <nav class="flex-1 space-y-2">
+            <a href="#" class="flex items-center gap-3 p-3 bg-blue-600 rounded-xl text-white text-sm font-bold">
+                <i data-lucide="layout-dashboard" class="w-4 h-4"></i> Dashboard
+            </a>
+            <a href="#" class="flex items-center gap-3 p-3 text-slate-400 hover:bg-slate-800 rounded-xl text-sm font-bold transition">
+                <i data-lucide="users" class="w-4 h-4"></i> Customers
+            </a>
+            <a href="#" class="flex items-center gap-3 p-3 text-slate-400 hover:bg-slate-800 rounded-xl text-sm font-bold transition">
+                <i data-lucide="credit-card" class="w-4 h-4"></i> Subscriptions
+            </a>
+            <a href="#" class="flex items-center gap-3 p-3 text-slate-400 hover:bg-slate-800 rounded-xl text-sm font-bold transition">
+                <i data-lucide="settings-2" class="w-4 h-4"></i> Page Design
+            </a>
+        </nav>
+
+        <div class="mt-auto pt-6 border-t border-slate-800">
+            <button class="flex items-center gap-3 text-red-500 font-bold text-sm">
+                <i data-lucide="log-out" class="w-4 h-4"></i> Logout Admin
+            </button>
+        </div>
+    </aside>
+
+    <main class="flex-1 overflow-y-auto p-10">
+        
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10">
+            <div class="card p-6">
+                <p class="text-slate-500 text-xs font-bold uppercase tracking-widest mb-2">Total Revenue</p>
+                <h2 class="text-3xl font-black text-white">₹2,84,500</h2>
+                <p class="text-green-500 text-[10px] mt-2 font-bold">+12% from last month</p>
+            </div>
+            <div class="card p-6">
+                <p class="text-slate-500 text-xs font-bold uppercase tracking-widest mb-2">Active Users</p>
+                <h2 class="text-3xl font-black text-white">142</h2>
+                <p class="text-blue-500 text-[10px] mt-2 font-bold">8 New today</p>
+            </div>
+            <div class="card p-6">
+                <p class="text-slate-500 text-xs font-bold uppercase tracking-widest mb-2">Pending Kyc</p>
+                <h2 class="text-3xl font-black text-white">05</h2>
+                <p class="text-orange-500 text-[10px] mt-2 font-bold">Requires action</p>
+            </div>
+            <div class="card p-6">
+                <p class="text-slate-500 text-xs font-bold uppercase tracking-widest mb-2">Server Load</p>
+                <h2 class="text-3xl font-black text-white">24ms</h2>
+                <p class="text-green-500 text-[10px] mt-2 font-bold">Optimal Speed</p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+            
+            <div class="lg:col-span-2">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-xl font-black text-white">Active Customers</h3>
+                    <button class="text-xs bg-slate-800 px-4 py-2 rounded-lg font-bold border border-slate-700 hover:bg-slate-700 transition">Export CSV</button>
+                </div>
+                <div class="card overflow-hidden">
+                    <table class="w-full text-left">
+                        <thead class="bg-slate-900/50 border-b border-slate-800">
+                            <tr class="text-[10px] font-black text-slate-500 uppercase tracking-widest">
+                                <th class="p-5">User / Gmail</th>
+                                <th class="p-5">Plan</th>
+                                <th class="p-5">Status</th>
+                                <th class="p-5">Expiry</th>
+                                <th class="p-5 text-right">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-sm">
+                            <tr class="border-b border-slate-800/50">
+                                <td class="p-5">
+                                    <p class="font-bold text-white">Rahul Sharma</p>
+                                    <p class="text-xs text-slate-500 italic">rahul.trader@gmail.com</p>
+                                </td>
+                                <td class="p-5 font-bold text-xs uppercase text-blue-400 tracking-tighter">Yearly</td>
+                                <td class="p-5"><span class="status-active font-black">ACTIVE</span></td>
+                                <td class="p-5 text-slate-400 text-xs">Mar 2027</td>
+                                <td class="p-5 text-right"><button class="text-slate-500 hover:text-white"><i data-lucide="more-horizontal"></i></button></td>
+                            </tr>
+                            <tr class="border-b border-slate-800/50">
+                                <td class="p-5">
+                                    <p class="font-bold text-white">Amit Patel</p>
+                                    <p class="text-xs text-slate-500 italic">amit88@gmail.com</p>
+                                </td>
+                                <td class="p-5 font-bold text-xs uppercase text-slate-400 tracking-tighter">Monthly</td>
+                                <td class="p-5"><span class="status-expired font-black">EXPIRED</span></td>
+                                <td class="p-5 text-slate-400 text-xs">Jan 2026</td>
+                                <td class="p-5 text-right"><button class="text-slate-500 hover:text-white"><i data-lucide="more-horizontal"></i></button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="space-y-8">
+                <h3 class="text-xl font-black text-white">Design Control</h3>
+                <div class="card p-8 space-y-6">
+                    <div>
+                        <label class="text-[10px] font-black uppercase tracking-widest text-slate-500 block mb-3">Main Theme Color</label>
+                        <div class="flex gap-3">
+                            <button onclick="changeTheme('blue')" class="w-8 h-8 rounded-full bg-blue-600 ring-2 ring-white"></button>
+                            <button onclick="changeTheme('green')" class="w-8 h-8 rounded-full bg-green-600"></button>
+                            <button onclick="changeTheme('purple')" class="w-8 h-8 rounded-full bg-purple-600"></button>
+                            <button onclick="changeTheme('red')" class="w-8 h-8 rounded-full bg-red-600"></button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="text-[10px] font-black uppercase tracking-widest text-slate-500 block mb-3">Live Screener Features</label>
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between p-3 bg-slate-900 rounded-xl">
+                                <span class="text-xs font-bold">Auto-Refresh (30s)</span>
+                                <input type="checkbox" checked class="w-4 h-4 accent-blue-600">
+                            </div>
+                            <div class="flex items-center justify-between p-3 bg-slate-900 rounded-xl">
+                                <span class="text-xs font-bold">Show Nifty Tracker</span>
+                                <input type="checkbox" checked class="w-4 h-4 accent-blue-600">
+                            </div>
+                            <div class="flex items-center justify-between p-3 bg-slate-900 rounded-xl">
+                                <span class="text-xs font-bold">Video Courses Module</span>
+                                <input type="checkbox" class="w-4 h-4 accent-blue-600">
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="w-full bg-blue-600 py-3 rounded-xl font-black text-[11px] uppercase tracking-[0.2em] hover:bg-blue-500 transition shadow-xl shadow-blue-600/20">
+                        Push Live Updates
+                    </button>
+                </div>
+
+                <div class="card p-8">
+                    <h4 class="text-xs font-black uppercase tracking-widest text-white mb-4">Add News Feature</h4>
+                    <input type="text" placeholder="Feature Name" class="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-xs mb-3 outline-none focus:border-blue-600">
+                    <textarea placeholder="Description" class="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-xs h-20 outline-none focus:border-blue-600 mb-4"></textarea>
+                    <button class="w-full border border-blue-600 text-blue-600 py-3 rounded-xl font-black text-[11px] uppercase tracking-[0.2em] hover:bg-blue-600 hover:text-white transition">Add to Landing Page</button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        lucide.createIcons();
+        function changeTheme(color) {
+            alert("Main Page theme set to: " + color.toUpperCase() + ". Refresh your screener to see changes.");
+        }
+    </script>
+</body>
+</html>

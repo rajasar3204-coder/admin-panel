@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MM_OS | Terminal Access</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=JetBrains+Mono:wght@400;700&display=swap');
+        
+        body { 
+            background-color: #02040a; 
+            font-family: 'JetBrains Mono', monospace;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .vault-card {
+            background: rgba(10, 15, 28, 0.95);
+            border: 1px solid #1e293b;
+            box-shadow: 0 0 60px rgba(0, 0, 0, 0.9), inset 0 0 20px rgba(59, 130, 246, 0.05);
+            width: 420px;
+            position: relative;
+            clip-path: polygon(10% 0, 90% 0, 100% 10%, 100% 90%, 90% 100%, 10% 100%, 0 90%, 0 10%);
+            transition: all 0.5s ease;
+        }
+
+        .radar-logo {
+            width: 70px; height: 70px;
+            border: 2px solid #3b82f6;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            position: relative; margin: 0 auto 15px;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+        }
+        .radar-logo::after {
+            content: ''; position: absolute; width: 100%; height: 100%;
+            border-radius: 50%; border: 1px solid #3b82f6;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(1.6); opacity: 0; } }
+
+        .cyber-input {
+            background: #05070f !important;
+            border: 1px solid #1e293b;
+            color: #3b82f6;
+            transition: all 0.3s;
+        }
+        .cyber-input:focus { border-color: #3b82f6; box-shadow: 0 0 12px rgba(59, 130, 246, 0.4); }
+
+        .glitch-text { font-family: 'Orbitron', sans-serif; letter-spacing: 0.2em; color: #fff; text-shadow: 1px 0 #ff00c1, -1px 0 #00fff9; }
+
+        .corner { position: absolute; width: 15px; height: 15px; border: 2px solid #3b82f6; pointer-events: none; }
+        .top-l { top: 0; left: 0; border-right: 0; border-bottom: 0; }
+        .top-r { top: 0; right: 0; border-left: 0; border-bottom: 0; }
+        .bot-l { bottom: 0; left: 0; border-right: 0; border-top: 0; }
+        .bot-r { bottom: 0; right: 0; border-left: 0; border-top: 0; }
+
+        .hidden-section { display: none; }
+        .tab-active { color: #3b82f6; border-bottom: 2px solid #3b82f6; }
+    </style>
+</head>
+<body>
+
+    <div class="vault-card p-10">
+        <div class="corner top-l"></div><div class="corner top-r"></div>
+        <div class="corner bot-l"></div><div class="corner bot-r"></div>
+
+        <div class="text-center mb-8">
+            <div class="radar-logo"><span class="text-2xl font-black italic text-white" style="font-family: 'Orbitron'">M</span></div>
+            <h1 class="glitch-text text-sm font-black uppercase tracking-widest">MasterMind_OS</h1>
+        </div>
+
+        <div class="flex justify-center gap-6 mb-8 text-[9px] font-black uppercase tracking-widest text-slate-600">
+            <button id="loginTab" onclick="switchMode('login')" class="tab-active pb-1">Login</button>
+            <button id="provisionTab" onclick="switchMode('provision')" class="pb-1 hover:text-blue-400">Provision_New</button>
+        </div>
+
+        <form id="loginForm" onsubmit="handleAdminLogin(event)" class="space-y-5">
+            <div>
+                <label class="text-[8px] text-slate-500 uppercase font-black mb-1 block">Access_ID</label>
+                <input type="text" id="user" required class="cyber-input w-full py-3 px-4 text-xs font-bold rounded-sm outline-none">
+            </div>
+            <div>
+                <label class="text-[8px] text-slate-500 uppercase font-black mb-1 block">Security_Key</label>
+                <input type="password" id="pass" required class="cyber-input w-full py-3 px-4 text-xs font-bold rounded-sm outline-none">
+            </div>
+            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-500 text-white py-4 text-[10px] font-black uppercase tracking-[0.3em] transition-all">
+                Verify Identity
+            </button>
+        </form>
+
+        <div id="provisionForm" class="hidden-section space-y-4">
+            <div>
+                <label class="text-[8px] text-slate-500 uppercase font-black mb-1 block">Staff_Gmail</label>
+                <div class="flex gap-2">
+                    <input type="email" id="new_gmail" placeholder="name@gmail.com" class="cyber-input flex-1 py-3 px-4 text-[10px] font-bold outline-none">
+                    <button onclick="sendOTP()" class="bg-blue-900/40 border border-blue-500 text-blue-400 px-3 py-1 text-[8px] font-black uppercase tracking-tighter">Get_OTP</button>
+                </div>
+            </div>
+
+            <div id="otpInputRow" class="hidden-section">
+                <label class="text-[8px] text-blue-500 uppercase font-black mb-1 block">6-Digit_Verification_Code</label>
+                <input type="text" id="otp_code" maxlength="6" class="cyber-input w-full py-3 text-center text-lg font-black tracking-[0.6em] outline-none mb-4">
+                
+                <div class="grid grid-cols-2 gap-3">
+                    <input type="text" id="new_id" placeholder="Assign_ID" class="cyber-input py-3 px-3 text-[10px]">
+                    <input type="password" id="new_pass" placeholder="Set_Key" class="cyber-input py-3 px-3 text-[10px]">
+                </div>
+                <button onclick="confirmProvision()" class="w-full mt-4 bg-green-600 text-white py-3 text-[9px] font-black uppercase tracking-widest">Create_Authorized_Node</button>
+            </div>
+        </div>
+
+        <div class="mt-8 flex justify-between items-center text-[7px] text-slate-700 font-bold border-t border-slate-900 pt-4 uppercase">
+            <span>Protocol: Secure_Admin_V4</span>
+            <span class="text-blue-900">Encrypted_Link_Active</span>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        function switchMode(mode) {
+            const loginF = document.getElementById('loginForm');
+            const provisionF = document.getElementById('provisionForm');
+            const loginT = document.getElementById('loginTab');
+            const provisionT = document.getElementById('provisionTab');
+
+            if(mode === 'login') {
+                loginF.style.display = 'block'; provisionF.style.display = 'none';
+                loginT.classList.add('tab-active'); provisionT.classList.remove('tab-active');
+            } else {
+                loginF.style.display = 'none'; provisionF.style.display = 'block';
+                loginT.classList.remove('tab-active'); provisionT.classList.add('tab-active');
+            }
+        }
+
+        function sendOTP() {
+            const mail = document.getElementById('new_gmail').value;
+            if(!mail.includes('@gmail.com')) { alert("AUTH_ERROR: GMAIL REQUIRED"); return; }
+            alert("SECURITY_SIGNAL: OTP sent to " + mail);
+            document.getElementById('otpInputRow').classList.remove('hidden-section');
+        }
+
+        function confirmProvision() {
+            const otp = document.getElementById('otp_code').value;
+            if(otp.length === 6) {
+                alert("PROVISION_SUCCESS: Node " + document.getElementById('new_id').value + " is now AUTHORIZED.");
+                switchMode('login');
+            } else {
+                alert("ACCESS_DENIED: INVALID_OTP");
+            }
+        }
+
+        function handleAdminLogin(e) {
+            e.preventDefault();
+            const u = document.getElementById('user').value;
+            const p = document.getElementById('pass').value;
+            if(u === "MASTERADMIN" && p === "MM2026") {
+                alert("DECRYPTING_DATA... WELCOME MASTER.");
+                window.location.href = "admin_dashboard.html";
+            } else {
+                alert("UNAUTHORIZED_SIGNATURE.");
+            }
+        }
+    </script>
+</body>
+</html>
